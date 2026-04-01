@@ -1,0 +1,20 @@
+{
+  "tasks": [
+    {
+      "layers": [
+        ["d.rast", "map=contours_scan"]
+      ],
+      "base": "elev_lid792_1m",
+      "scanning_params": {
+        "smooth": 10,
+        "zexag": 2,
+        "numscans": 1,
+        "interpolate": true
+      },
+      "analyses": "sebastian_contour.py",
+      "title": "Contours",
+      "author": "Juan Sebastian",
+      "instructions": "Change topography and observe changes in contours."
+    }
+  ]
+}
