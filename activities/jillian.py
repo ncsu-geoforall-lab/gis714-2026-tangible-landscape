@@ -5,9 +5,24 @@ import os
 import grass.script as gs
 
 
-def run_hydro(scanned_elev, env, **kwargs):
-    gs.run_command('r.watershed', elevation=scanned_elev, accumulation='flow_accum',
-                   basin='watersheds', threshold=1000, flags='a', env=env)
+def run_slope(scanned_elev, env, **kwargs):
+    gs.run_command("r.slope.aspect", elevation=scanned_elev, slope="slope", env=env)
+
+
+def run_waterflow(scanned_elev, env, **kwargs):
+    # first we need to compute x- and y-derivatives
+    gs.run_command(
+        "r.slope.aspect", elevation=scanned_elev, dx="scan_dx", dy="scan_dy", env=env
+    )
+    gs.run_command(
+        "r.sim.water",
+        elevation=scanned_elev,
+        dx="scan_dx",
+        dy="scan_dy",
+        rain_value=300,
+        depth="flow",
+        env=env,
+    )
 
 
 def main():
@@ -18,7 +33,8 @@ def main():
     gs.run_command("g.region", raster=elevation, res=4, flags="a", env=env)
     gs.run_command("r.resamp.stats", input=elevation, output=elev_resampled, env=env)
 
-    run_hydro(scanned_elev=elev_resampled, env=env)
+    run_slope(scanned_elev=elev_resampled, env=env)
+    run_waterflow(scanned_elev=elev_resampled, env=env)
 
 
 if __name__ == "__main__":
