@@ -4,9 +4,20 @@ import os
 
 import grass.script as gs
 
+# def run_slope(scanned_elev, env, **kwargs):
+#     gs.run_command("r.slope.aspect", elevation=scanned_elev, slope="slope", env=env)
 
-def run_slope(scanned_elev, env, **kwargs):
-    gs.run_command("r.slope.aspect", elevation=scanned_elev, slope="slope", env=env)
+
+def run_lake(scanned_elev, env, **kwargs):
+    coordinates = [638830, 220150]
+    gs.run_command(
+        "r.lake",
+        elevation=scanned_elev,
+        lake="lake",
+        coordinates=coordinates,
+        water_level=120,
+        env=env,
+    )
 
 
 def run_waterflow(scanned_elev, env, **kwargs):
@@ -33,8 +44,9 @@ def main():
     gs.run_command("g.region", raster=elevation, res=4, flags="a", env=env)
     gs.run_command("r.resamp.stats", input=elevation, output=elev_resampled, env=env)
 
-    run_slope(scanned_elev=elev_resampled, env=env)
+    # run_slope(scanned_elev=elev_resampled, env=env)
     run_waterflow(scanned_elev=elev_resampled, env=env)
+    run_lake(scanned_elev=elev_resampled, env=env)
 
 
 if __name__ == "__main__":

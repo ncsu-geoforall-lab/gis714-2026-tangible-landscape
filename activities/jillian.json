@@ -1,18 +1,25 @@
 {
     "tasks": [
         {
-            "layers": [["d.rast", "map=slope"], ["d.rast", "map=flow"]],
+            "layers": [
+                ["d.rast", "map=flow"],
+                ["d.rast", "map=lake"],
+                [
+                    "d.vect",
+                    "map=streets_wake@PERRMANENT color = 255:0:212:255 width = 20"
+                ]
+            ],
             "base": "elev_lid792_1m",
             "scanning_params": {
                 "smooth": 10,
                 "zexag": 2,
                 "numscans": 1,
-                "interpolate": true,
+                "interpolate": true
             },
             "analyses": "jillian.py",
             "title": "Water Simulation",
             "author": "Jillian Greene",
-            "instructions": "Change topography and observe changes water.",
+            "instructions": "Change topography and observe changes water."
         }
     ]
 }
