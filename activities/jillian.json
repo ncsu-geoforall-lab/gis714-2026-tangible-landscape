@@ -9,7 +9,7 @@
                     "d.vect",
                     "map=streets_wake@PERMANENT",
                     "color=255:0:212:255",
-                    "width = 20"
+                    "width=20"
                 ]
             ],
             "base": "elev_lid792_1m",
