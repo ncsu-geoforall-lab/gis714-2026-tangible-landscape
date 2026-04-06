@@ -8,15 +8,30 @@ import grass.script as gs
 #     gs.run_command("r.slope.aspect", elevation=scanned_elev, slope="slope", env=env)
 
 
-def run_lake(scanned_elev, env, **kwargs):
-    coordinates = [638830, 220150]
-    gs.run_command(
-        "r.lake",
-        elevation=scanned_elev,
-        lake="lake",
-        coordinates=coordinates,
-        water_level=120,
+def run_ponds(scanned_elev, env, **kwargs):
+    repeat = 2
+    input_dem = scanned_elev
+    output = "tmp_filldir"
+    for i in range(repeat):
+        gs.run_command(
+            "r.fill.dir", input=input_dem, output=output, direction="tmp_dir", env=env
+        )
+        input_dem = output
+
+    # Get the minimum elevation value in the DEM
+    stats = gs.parse_command("r.univar", map=scanned_elev, flags="g", env=env)
+    min_elev = float(stats["min"])
+
+    # Find the lowest depression only — within some tolerance of the minimum
+    gs.mapcalc(
+        "{new} = if({out} - {scan} > 0.1 && {scan} <= {min_elev} + 0.5, {out} - {scan}, null())".format(
+            new="ponds", out=output, scan=scanned_elev, min_elev=min_elev
+        ),
         env=env,
+    )
+
+    gs.write_command(
+        "r.colors", map="ponds", rules="-", stdin="0% aqua\n100% blue", env=env
     )
 
 
@@ -46,7 +61,7 @@ def main():
 
     # run_slope(scanned_elev=elev_resampled, env=env)
     run_waterflow(scanned_elev=elev_resampled, env=env)
-    run_lake(scanned_elev=elev_resampled, env=env)
+    run_ponds(scanned_elev=elev_resampled, env=env)
 
 
 if __name__ == "__main__":
