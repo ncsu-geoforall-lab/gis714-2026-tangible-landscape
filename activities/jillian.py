@@ -17,19 +17,13 @@ def run_ponds(scanned_elev, env, **kwargs):
             "r.fill.dir", input=input_dem, output=output, direction="tmp_dir", env=env
         )
         input_dem = output
-
-    # Get the minimum elevation value in the DEM
-    stats = gs.parse_command("r.univar", map=scanned_elev, flags="g", env=env)
-    min_elev = float(stats["min"])
-
-    # Find the lowest depression only — within some tolerance of the minimum
+    # filter depression deeper than 0.1 m to
     gs.mapcalc(
-        "{new} = if({out} - {scan} > 0.1 && {scan} <= {min_elev} + 0.5, {out} - {scan}, null())".format(
-            new="ponds", out=output, scan=scanned_elev, min_elev=min_elev
+        "{new} = if({out} - {scan} > 0.1, {out} - {scan}, null())".format(
+            new="ponds", out=output, scan=scanned_elev
         ),
         env=env,
     )
-
     gs.write_command(
         "r.colors", map="ponds", rules="-", stdin="0% aqua\n100% blue", env=env
     )
