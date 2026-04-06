@@ -4,6 +4,7 @@ import os
 
 import grass.script as gs
 
+
 def run_slope(scanned_elev, env, **kwargs):
     gs.run_command("r.slope.aspect", elevation=scanned_elev, slope="slope", env=env)
     gs.run_command("r.colors", map="slope", color="oranges")
