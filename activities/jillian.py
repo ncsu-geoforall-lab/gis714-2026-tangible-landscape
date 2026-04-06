@@ -4,8 +4,9 @@ import os
 
 import grass.script as gs
 
-# def run_slope(scanned_elev, env, **kwargs):
-#     gs.run_command("r.slope.aspect", elevation=scanned_elev, slope="slope", env=env)
+def run_slope(scanned_elev, env, **kwargs):
+    gs.run_command("r.slope.aspect", elevation=scanned_elev, slope="slope", env=env)
+    gs.run_command("r.colors", map="slope", color="oranges")
 
 
 def run_ponds(scanned_elev, env, **kwargs):
@@ -39,6 +40,7 @@ def run_waterflow(scanned_elev, env, **kwargs):
         elevation=scanned_elev,
         dx="scan_dx",
         dy="scan_dy",
+        man_value=0.4,
         rain_value=300,
         depth="flow",
         env=env,

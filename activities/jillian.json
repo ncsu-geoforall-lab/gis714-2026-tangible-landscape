@@ -2,7 +2,8 @@
     "tasks": [
         {
             "layers": [
-                ["d.rast", "map=flow"],
+                ["d.rast", "map=slope"],
+                ["d.rast", "map=flow", "values=0.05-100"],
                 ["d.rast", "map=ponds"],
                 [
                     "d.vect",
