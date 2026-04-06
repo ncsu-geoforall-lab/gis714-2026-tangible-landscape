@@ -8,7 +8,7 @@ def run_marker(scanned_elev, elevation, env, **kwargs):
     gs.mapcalc("difference = if(difference == 1, 1, null())")
 
 def run_viewshed(elevation, difference, env, **kwargs):
-    gs.run_command("g.region", raster=difference, zoom=difference)
+    gs.run_command("g.region", raster=difference, zoom=difference, env=env)
     region = gs.parse_command("g.region", flags="g")
     x_centre = (float(region["e"]) + float(region["w"])) / 2
     y_centre = (float(region["n"]) + float(region["s"])) / 2
