@@ -56,7 +56,7 @@ def main():
     gs.run_command("g.region", raster=elevation, res=4, flags="a", env=env)
     gs.run_command("r.resamp.stats", input=elevation, output=elev_resampled, env=env)
 
-    # run_slope(scanned_elev=elev_resampled, env=env)
+    run_slope(scanned_elev=elev_resampled, env=env)
     run_waterflow(scanned_elev=elev_resampled, env=env)
     run_ponds(scanned_elev=elev_resampled, env=env)
 
