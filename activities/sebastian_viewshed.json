@@ -2,6 +2,7 @@
   "tasks": [
     {
       "layers": [
+        ["d.rast", "map=ortho_2001_t792_1m"],
         ["d.rast", "map=viewshed", "values=1"]
       ],
       "base": "elev_lid792_1m",
