@@ -5,8 +5,9 @@ import os
 import grass.script as gs
 
 
-def run_contours(scanned_elev, outname, env, **kwargs):
-    gs.run_command("r.contour", input=scanned_elev, output=outname, env=env)
+def run_sun(scanned_elev, day_of_year, time, env, **kwargs):
+    gs.run_command("r.sun", input=scanned_elev, day=day_of_year,
+                   time=time, glob_rad="global_irradiation", env=env)
 
 
 def main():
@@ -17,7 +18,8 @@ def main():
     gs.run_command("g.region", raster=elevation, res=4, flags="a", env=env)
     gs.run_command("r.resamp.stats", input=elevation, output=elev_resampled, env=env)
 
-    run_contours(scanned_elev=elev_resampled, outname="contour_map", env=env)
+    run_sun(scanned_elev=elev_resampled, day_of_year=261, time=12,
+            env=env)  # testing with my birthday!
 
 
 if __name__ == "__main__":
