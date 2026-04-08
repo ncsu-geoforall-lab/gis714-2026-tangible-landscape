@@ -2,7 +2,8 @@
   "tasks": [
     {
       "layers": [
-        ["d.rast", "map=slope"]
+        ["d.rast", "map=erosion_deposition"], 
+        ["d.rast", "map=flow", "values=0.1-100"]
       ],
       "base": "elev_lid792_1m",
       "scanning_params": {
@@ -14,7 +15,7 @@
       "analyses": "KaileeBerge.py",
       "title": "Waterflow Test",
       "author": "Kailee Berge",
-      "instructions": "Change topography and observe changes in waterflow."
+      "instructions": "Change topography and observe changes in waterflow and erosion"
     }
   ]
 }

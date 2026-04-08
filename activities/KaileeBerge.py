@@ -1,15 +1,12 @@
-#!/usr/bin/env python3
-
 import os
 
 import grass.script as gs
 
 
 def run_waterflow(scanned_elev, env, **kwargs):
-    # first we need to compute x- and y-derivatives
+    # first compute x- and y-derivatives
     gs.run_command(
-        "r.slope.aspect", elevation=scanned_elev, 
-        dx="scan_dx", dy="scan_dy", env=env
+        "r.slope.aspect", elevation=scanned_elev, dx="scan_dx", dy="scan_dy", env=env
     )
     gs.run_command(
         "r.sim.water",
@@ -22,7 +19,7 @@ def run_waterflow(scanned_elev, env, **kwargs):
     )
 
     # erosion modeling
-    # Note: first install addon r.divergence using g.extension
+    # Note: first install addon r.divergence
 
 
 def run_usped(scanned_elev, env, **kwargs):
@@ -94,8 +91,7 @@ def main():
     elevation = "elev_lid792_1m"
     elev_resampled = "elev_resampled"
     gs.run_command("g.region", raster=elevation, res=4, flags="a", env=env)
-    gs.run_command("r.resamp.stats", input=elevation, 
-                   output=elev_resampled, env=env)
+    gs.run_command("r.resamp.stats", input=elevation, output=elev_resampled, env=env)
 
     run_waterflow(scanned_elev=elev_resampled, env=env)
     run_usped(scanned_elev=elev_resampled, env=env)
