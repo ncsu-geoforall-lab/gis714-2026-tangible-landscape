@@ -1,26 +1,15 @@
-    {
+{
   "tasks": [
     {
       "layers": [
         [
           "d.rast",
-          "map=runoff_risk"
-        ],
-        [
-          "d.rast",
-          "map=flow_accum",
-          "values=50-9999"
-        ],
-        [
-          "d.vect",
-          "map=stream_network",
-          "color=blue",
-          "width=2"
+          "map=runoff"
         ],
         [
           "d.legend",
-          "raster=runoff_risk",
-          "title=Runoff Risk",
+          "raster=runoff",
+          "title=Runoff Intensity",
           "at=5,30,2,15"
         ]
       ],
@@ -32,9 +21,9 @@
         "interpolate": true
       },
       "analyses": "abby_TL.py",
-      "title": "Landcover & Overland Water Flow",
-      "author": "Abby W",
-      "instructions": "Change the landcover with felt patches. Flow accumulation paths and runoff risk change will change based on landcover. Areas shown in red indicate high runoff risk."
+      "title": "How Landcover Influences Runoff",
+      "author": "Abby Wiese",
+      "instructions": "Reshape the tangible landscape and observe how runoff intensity (blue=low, red=high) changes in response. In this analysis, runoff intensity considers both the topography and the landcover of the landscape which impacts the roughness of the surface and therefore how water behaves."
     }
   ]
 }
