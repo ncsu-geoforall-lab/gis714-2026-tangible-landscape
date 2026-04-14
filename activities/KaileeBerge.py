@@ -2,8 +2,6 @@ import os
 
 import grass.script as gs
 
-# scan rasters here
-
 
 def run_waterflow(scanned_elev, env, **kwargs):
     # first compute x- and y-derivatives
@@ -119,28 +117,62 @@ def run_probability(erosion_deposition, flow, env, **kwargs):
 
 # someone places a pin to make a guess
 # return the probabilty of a species at pin
-def get_probability_at_pin(pin_vector, env, **kwargs):
-    # Query raster value at point(s)
-    result = gs.read_command(
-        "r.what",
-        map="probabilitySurface",
-        points=pin_vector,
-        env=env,
+
+
+def run_function_with_points(scanned_elev, env, points=None, **kwargs):
+    """Doesn't do anything, except loading points from a vector map to Python
+
+    If *points* is provided, the function assumes it is name of an existing vector map.
+    This is used during testing.
+    If *points* is not provided, the function assumes it runs in Tangible Landscape.
+    """
+    if not points:
+        # If there are no points, ask Tangible Landscape to generate points from
+        # a change in the surface.
+        points = "points"
+        import analyses
+
+        analyses.change_detection(
+            "scan_saved",
+            scanned_elev,
+            points,
+            height_threshold=[10, 100],
+            cells_threshold=[5, 50],
+            add=True,
+            max_detected=5,
+            debug=True,
+            env=env,
+        )
+    # Output point coordinates from GRASS GIS and read coordinates into a Python list.
+    point_list = []
+    data = (
+        gs.read_command(
+            "v.out.ascii",
+            input=points,
+            type="point",
+            format="point",
+            separator="comma",
+            env=env,
+        )
+        .strip()
+        .splitlines()
     )
-
-    # r.what returns text; parse the probability value
-    # Format: east|north|value
-    values = []
-    for line in result.strip().split("\n"):
-        parts = line.split("|")
-        if len(parts) >= 3:
-            values.append(float(parts[2]))
-
-    return values
+    if len(data) < 2:
+        # For the cases when the analysis expects at least 2 points, we check the
+        # number of points and return from the function if there is less than 2
+        # points. (No points is a perfectly valid state in Tangible Landscape,
+        # so we need to deal with it here.)
+        return
+    for point in data:
+        point_list.append([float(p) for p in point.split(",")][:2])
 
 
-# someone places a pin to make a guess
-# return the probabilty of a species at pin
+gs.read_command(
+    "r.what",
+    map="probabilitySurface",
+    points=points,
+    env=env,
+)
 
 
 def main():
@@ -153,8 +185,20 @@ def main():
 
     run_waterflow(scanned_elev=elev_resampled, env=env)
     run_usped(scanned_elev=elev_resampled, env=env)
-
     run_probability(erosion_deposition="erosion_deposition", flow="flow", env=env)
+
+    points = "points"
+    gs.write_command(
+        "v.in.ascii",
+        flags="t",
+        input="-",
+        output=points,
+        separator="comma",
+        stdin="638432,220382\n638621,220607",
+        env=env,
+    )
+
+    run_function_with_points(scanned_elev=elev_resampled, env=env, points=points)
 
 
 if __name__ == "__main__":
