@@ -59,7 +59,7 @@ def run_flow_analysis(scanned_elev, env, landcover="landcover_1m", **kwargs):
     )
 
     # Color: low runoff = blue, high runoff = red
-    gs.run_command("r.colors", map="runoff", color="bgyr", flags="e", env=env)
+    gs.run_command("r.colors", map="runoff", color="blues", flags="e", env=env)
 
 
 def main():
