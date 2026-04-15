@@ -5,16 +5,18 @@ How does landcover influence runoff?
 """
 
 import os
+
 import grass.script as gs
- 
+
+
 def run_flow_analysis(scanned_elev, landcover, env, **kwargs):
     """
     Computes flow accumulation and a Manning's n-weighted runoff map.
     Lower roughness i.e. impervious surfaces (roads, developed) = faster runoff.
     Higher roughness (forest, wetland) = slower, reduced runoff.
     """
- 
-    # Flow accumulation 
+
+    # Flow accumulation
     gs.run_command(
         "r.watershed",
         elevation=scanned_elev,
@@ -22,7 +24,7 @@ def run_flow_analysis(scanned_elev, landcover, env, **kwargs):
         flags="a",
         env=env,
     )
- 
+
     # Assign Manning's n roughness coefficient to each landcover class
     #   1=pond          -> Open Water                      (0.001)
     #   2=forest        -> Mixed Forest                    (0.400)
@@ -49,37 +51,45 @@ def run_flow_analysis(scanned_elev, landcover, env, **kwargs):
         f"if({landcover}==11,0.368,0.0404)))))))))))"
     )
     gs.mapcalc(roughness_expr, env=env)
- 
+
     # Divide by roughness: smoother surfaces produce more runoff
     # Pond roughness values are extremely small, exclude from the output
-    gs.mapcalc("runoff = if(landcover_int == 1, null(), abs(flow_accum) / roughness)", env=env)
- 
+    gs.mapcalc(
+        "runoff = if(landcover_int == 1, null(), abs(flow_accum) / roughness)", env=env
+    )
+
     # Color: low runoff = blue, high runoff = red
     gs.run_command("r.colors", map="runoff", color="bgyr", env=env)
- 
- 
+
+
 def main():
     env = os.environ.copy()
     env["GRASS_OVERWRITE"] = "1"
- 
+
     elevation = "elev_lid792_1m"
     elev_resampled = "elev_resampled"
     landcover_resampled = "landcover_resampled"
- 
+
     gs.run_command("g.region", raster=elevation, res=4, flags="a", env=env)
     gs.run_command("r.resamp.stats", input=elevation, output=elev_resampled, env=env)
-    gs.run_command("r.resamp.stats", input="landcover_1m", output=landcover_resampled, method="mode", env=env)
+    gs.run_command(
+        "r.resamp.stats",
+        input="landcover_1m",
+        output=landcover_resampled,
+        method="mode",
+        env=env,
+    )
     gs.run_command("g.region", raster=elev_resampled, env=env)
- 
+
     # Convert to integer for mapcalc
     gs.mapcalc("landcover_int = int(landcover_resampled)", env=env)
- 
+
     run_flow_analysis(
         scanned_elev=elev_resampled,
         landcover="landcover_int",
         env=env,
     )
- 
- 
+
+
 if __name__ == "__main__":
     main()
