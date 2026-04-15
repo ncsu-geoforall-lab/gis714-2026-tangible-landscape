@@ -4,16 +4,22 @@
       "layers": [
         [
           "d.rast",
-          "map=runoff"
+          "map=roughness"
+        ],
+        [
+          "d.rast",
+          "map=runoff",
+          "values=100-1000000"
         ],
         [
           "d.legend",
           "raster=runoff",
           "title=Runoff Intensity",
-          "at=5,30,2,15"
+          "at=5,30,2,7",
+          "bgcolor=white"
         ]
       ],
-      "base": "elev_lid792_1m",
+      "base": "scan",
       "scanning_params": {
         "smooth": 10,
         "zexag": 2,
