@@ -12,7 +12,7 @@
         "numscans": 1,
         "interpolate": true
       },
-      "analyses": "SaraCornejo_waterflow.py",
+      "analyses": "Testing_SaraC.py",
       "title": "Water Flow and Accumulation",
       "author": "Sara Cornejo",
       "instructions": "Change topography and observe changes in water flow and pond accumulation."
