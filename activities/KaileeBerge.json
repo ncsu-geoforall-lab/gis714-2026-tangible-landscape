@@ -3,7 +3,11 @@
     {
       "layers": [
         ["d.rast", "map=erosion_deposition"],
-        ["d.rast", "map=flow", "values=0.1-100"]
+        ["d.legend", "raster=erosion_deposition"],
+        ["d.rast", "map=flow", "values=0.1-100"],
+        ["d.legend", "raster=flow"],
+        ["d.rast", "map=probabilitySurface"],
+        ["d.legend", "raster=probabilitySurface"]
       ],
       "base": "elev_lid792_1m",
       "scanning_params": {
