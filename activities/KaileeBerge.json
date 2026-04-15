@@ -17,6 +17,16 @@
         "interpolate": true
       },
       "analyses": "KaileeBerge.py",
+      "display": {
+        "relative_position": [1.08], 
+        "relative_size": [0.75],
+        "multiple": false, 
+        "average": 2,
+        "fontsize": 12, 
+        "maximum": [100],
+        "formatting_string": ["{:.0f} %"],
+        "title": ["output"]
+      },
       "title": "Finding the Aquatic Critters",
       "author": "Kailee Berge",
       "instructions": "Change topography and observe changes in waterflow and erosion. Use this to guess where our critters occur"
