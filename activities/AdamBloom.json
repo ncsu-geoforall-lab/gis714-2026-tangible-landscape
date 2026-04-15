@@ -1,0 +1,18 @@
+{
+  "tasks": [
+    {
+      "layers": [["d.rast", "map=global_irradiation"]],
+      "base": "elev_lid792_1m",
+      "scanning_params": {
+        "smooth": 10,
+        "zexag": 2,
+        "numscans": 1,
+        "interpolate": true
+      },
+      "analyses": "AdamBloom.py",
+      "title": "Run Sun Photochemical Reaction Analysis",
+      "author": "Adam Bloom",
+      "instructions": "After changing topography visualize solar radiation for potential areas of photochemical reactions!"
+    }
+  ]
+}
