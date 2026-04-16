@@ -166,7 +166,9 @@ def run_function_with_points(scanned_elev, eventHandler, env, points=None, **kwa
         points=points,
         env=env,
     )
-    print(point_prob)
+    print(point_prob.split("|")[-1])
+    # percentage = float(point_prob.split("|")[-1]) * 100
+
     # the output seems to be three columns separated by |
     # coordinates and the probability
     # 2890|28689|0.15
@@ -181,7 +183,7 @@ def run_function_with_points(scanned_elev, eventHandler, env, points=None, **kwa
     # print(label)
 
     # update dashboard
-    event = updateDisplay(value=label)
+    event = updateDisplay(value=point_prob)
     eventHandler.postEvent(receiver=eventHandler.activities_panel, event=event)
     # throw eventHandler into defining function
     # activities_panel
