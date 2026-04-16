@@ -16,12 +16,15 @@
         "numscans": 1,
         "interpolate": true
       },
+      "calibrate": true,
       "analyses": "KaileeBerge.py",
       "display": {
-        "relative_position": [0, 1.08], 
+        "relative_position": [1.0, 1.08], 
         "relative_size": [0.75,0.21],
         "multiple": true, 
+        "maximum" : [100000,100000, 1],
         "fontsize": 12, 
+        "formatting_string": ["{.1f}%"],
         "title": ["X, Y, Prob of Occurrence"]
       },
       "title": "Finding the Aquatic Critters",
