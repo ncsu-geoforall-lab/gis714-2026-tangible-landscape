@@ -160,16 +160,31 @@ def run_function_with_points(scanned_elev, eventHandler, env, points=None, **kwa
     # for point in data:
     #     point_list.append([float(p) for p in point.split(",")][:2])
 
-    output = gs.read_command(
+    point_prob = gs.read_command(
         "r.what",
         map="probabilitySurface",
         points=points,
         env=env,
     )
+    print(point_prob)
+    # the output seems to be three columns separated by |
+    # coordinates and the probability
+    # 2890|28689|0.15
+
+    # label = gs.read_command(
+    #    "v.what.rast.label",
+    #    vector=points,
+    #    raster="probabilitySurface",
+    #    #output=label,
+    #    env=env,
+    # )
+    # print(label)
 
     # update dashboard
-    event = updateDisplay(value=output)
+    event = updateDisplay(value=label)
     eventHandler.postEvent(receiver=eventHandler.activities_panel, event=event)
+    # throw eventHandler into defining function
+    # activities_panel
 
 
 def main():

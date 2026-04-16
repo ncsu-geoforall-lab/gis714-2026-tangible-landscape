@@ -18,14 +18,11 @@
       },
       "analyses": "KaileeBerge.py",
       "display": {
-        "relative_position": [1.08], 
-        "relative_size": [0.75],
-        "multiple": false, 
-        "average": 2,
+        "relative_position": [0, 1.08], 
+        "relative_size": [0.75,0.21],
+        "multiple": true, 
         "fontsize": 12, 
-        "maximum": [100],
-        "formatting_string": ["{:.0f} %"],
-        "title": ["output"]
+        "title": ["X, Y, Prob of Occurrence"]
       },
       "title": "Finding the Aquatic Critters",
       "author": "Kailee Berge",
