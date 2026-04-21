@@ -66,10 +66,6 @@ def run_function_with_points(scanned_elev, env, points=None, **kwargs):
         return
     for point in data:
         point_list.append([float(p) for p in point.split(",")][:2])
-    
-    
-
-
 
 
 def main():
@@ -99,9 +95,6 @@ def main():
         stdin="638432,220382\n638621,220607",
         env=env,
     )
-
-
-
     # Call the analysis.
     run_function_with_points(scanned_elev=elev_resampled, env=env, points=points)
 

@@ -3,6 +3,7 @@
 import os
 import grass.script as gs
 
+
 def run_viewshed(scanned_elev, env, points=None, **kwargs):
 
     if not points:
@@ -21,7 +22,6 @@ def run_viewshed(scanned_elev, env, points=None, **kwargs):
             env=env,
         )
 
-    point_list = []
     data = (
         gs.read_command(
             "v.out.ascii",
@@ -34,14 +34,14 @@ def run_viewshed(scanned_elev, env, points=None, **kwargs):
         .strip()
         .splitlines()
     )
-    
+
     if len(data) < 2:
         # For the cases when the analysis expects at least 2 points, we check the
         # number of points and return from the function if there is less than 2
         # points. (No points is a perfectly valid state in Tangible Landscape,
         # so we need to deal with it here.)
         return
-        
+
     point = data[0]
     x, y = [float(p) for p in point.split(",")][:2]
 
@@ -52,7 +52,6 @@ def run_viewshed(scanned_elev, env, points=None, **kwargs):
         coordinates=f"{x},{y}",
         env=env,
     )
-
 
 
 def main():
@@ -73,9 +72,10 @@ def main():
         stdin="638432,220382\n638621,220607",
         env=env,
     )
-    
+
     # Call the analysis.
     run_viewshed(scanned_elev=elev_resampled, env=env, points=points)
+
 
 if __name__ == "__main__":
     main()
