@@ -95,7 +95,10 @@ def run_probability(
 
     # logistic transformation
     gs.mapcalc(
-        f"""probabilitySurface = 1 / (1 + exp(-({b0} + {b1} * {erosion_deposition}+ {b2} * {flow})))""",
+        (
+            f"probabilitySurface = 1 / (1 + exp(-({b0} + {b1}"
+            f" * {erosion_deposition}+ {b2} * {flow})))"
+        ),
         env=env,
     )
     colors = ["0 white", "0.25 blue", "0.5 yellow", "0.75 orange", "1 red"]
@@ -112,7 +115,9 @@ def run_probability(
 # return the probabilty of a species at pin
 
 
-def run_function_with_points(scanned_elev, eventHandler, env, points=None, **kwargs):
+def run_function_with_points(
+    scanned_elev, eventHandler=None, env=None, points=None, **kwargs
+):
     """Doesn't do anything, except loading points from a vector map to Python
 
     If *points* is provided, the function assumes it is name of an existing vector map.

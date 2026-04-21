@@ -96,7 +96,10 @@ def run_probability(
 
     # logistic transformation
     gs.mapcalc(
-        f"""probabilitySurface = 1 / (1 + exp(-({b0} + {b1} * {erosion_deposition}+ {b2} * {flow})))""",
+        (
+            f"probabilitySurface = 1 / (1 + exp(-({b0} + {b1}"
+            f" * {erosion_deposition}+ {b2} * {flow})))"
+        ),
         env=env,
     )
     colors = ["0 white", "0.25 blue", "0.5 yellow", "0.75 orange", "1 red"]

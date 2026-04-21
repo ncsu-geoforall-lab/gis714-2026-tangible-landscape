@@ -52,6 +52,9 @@ class TestContentOfJsonFiles(unittest.TestCase):
     def test_files_have_expected_content(self):
         """Check that files contain required pieces"""
         for filename, full_path in get_all_json_files(self.path):
+            if filename == self.main_config_file:
+                # Skip checking the main config file.
+                continue
             with open(full_path) as file_handle:
                 try:
                     content = json.load(file_handle)

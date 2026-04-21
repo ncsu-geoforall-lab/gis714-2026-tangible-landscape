@@ -1,10 +1,12 @@
-import os
 import json
+import os
 
 import grass.script as gs
 
 
-def run_function_with_points(scanned_elev, eventHandler, env, points=None, **kwargs):
+def run_function_with_points(
+    scanned_elev, eventHandler=None, env=None, points=None, **kwargs
+):
     """Doesn't do anything, except loading points from a vector map to Python
 
     If *points* is provided, the function assumes it is name of an existing vector map.
