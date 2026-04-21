@@ -90,6 +90,7 @@ def main():
 
     # Call the analysis.
     run_viewshed(scanned_elev=elev_resampled, env=env, points=points)
+    run_contours(scanned_elev=elev_resampled, env=env)
 
 
 if __name__ == "__main__":
