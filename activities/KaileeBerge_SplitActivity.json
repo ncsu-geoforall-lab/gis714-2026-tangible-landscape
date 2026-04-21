@@ -3,9 +3,8 @@
     {
       "layers": [
         ["d.rast", "map=erosion_deposition"],
-        ["d.legend", "raster=erosion_deposition"],
-        ["d.rast", "map=flow", "values=0.1-100"],
-        ["d.legend", "raster=flow"]
+        ["d.legend", "raster=erosion_deposition", "font=sans", "-t", "range=-200,200"],
+        ["d.rast", "map=flow", "values=0.1-100"]
       ],
       "base": "elev_lid792_1m",
       "scanning_params": {
@@ -14,16 +13,16 @@
         "numscans": 1,
         "interpolate": true
       },
-      "calibrate": true,
+      "calibrate": false,
       "analyses": "KaileeBerge_Activity1.py",
       "title": "Finding the Aquatic Critters Part 1",
       "author": "Kailee Berge",
       "instructions": "Change topography and observe changes in waterflow and erosion."
-    }
+    },
     {
       "layers": [
         ["d.rast", "map=probabilitySurface"],
-        ["d.legend", "raster=probabilitySurface"]
+        ["d.legend", "raster=probabilitySurface", "font=sans", "-t"]
       ],
       "base": "elev_lid792_1m",
       "scanning_params": {
@@ -35,13 +34,13 @@
       "calibrate": true,
       "analyses": "KaileeBerge_Activity2.py",
       "display": {
-        "relative_position": [1.0, 1.08], 
-        "relative_size": [0.75,0.21],
-        "multiple": true, 
+        "relative_position": [0.9, 0.5],
+        "relative_size": [0.4, 0.3],
+        "multiple": true,
         "maximum" : [100000,100000, 1],
-        "fontsize": 12, 
-        "formatting_string": ["{.1f}%"],
-        "title": ["X, Y, Prob of Occurrence"]
+        "fontsize": 50,
+        "formatting_string": ["{:.1f}", "{:.1f}", "{:.1f}%"],
+        "title": ["X", "Y", "Probability"]
       },
       "title": "Finding the Aquatic Critters Part 2",
       "author": "Kailee Berge",

@@ -14,6 +14,7 @@ def run_waterflow(scanned_elev, env, **kwargs):
         dx="scan_dx",
         dy="scan_dy",
         rain_value=150,
+        man_value=0.4,
         depth="flow",
         env=env,
     )

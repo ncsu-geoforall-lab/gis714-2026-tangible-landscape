@@ -1,4 +1,5 @@
 import os
+import json
 
 import grass.script as gs
 
@@ -18,13 +19,13 @@ def run_function_with_points(scanned_elev, eventHandler, env, points=None, **kwa
         from activities import updateDisplay
 
         analyses.change_detection(
-            "scan_saved",
+            kwargs["scanned_calib_elev"],
             scanned_elev,
             points,
             height_threshold=[10, 100],
             cells_threshold=[5, 50],
             add=True,
-            max_detected=5,
+            max_detected=1,
             debug=True,
             env=env,
         )
@@ -33,20 +34,18 @@ def run_function_with_points(scanned_elev, eventHandler, env, points=None, **kwa
         "r.what",
         map="probabilitySurface",
         points=points,
+        format="json",
         env=env,
     )
-    print(point_prob.split("|")[-1])
-    # percentage = float(point_prob.split("|")[-1]) * 100
+    point_prob = json.loads(point_prob)
+    if point_prob:
+        p = point_prob[0]["probabilitySurface"]["value"] * 100
 
-    # the output seems to be three columns separated by |
-    # coordinates and the probability
-    # 2890|28689|0.15
-
-    # update dashboard
-    event = updateDisplay(value=point_prob)
-    eventHandler.postEvent(receiver=eventHandler.activities_panel, event=event)
-    # throw eventHandler into defining function
-    # activities_panel
+        # update dashboard
+        event = updateDisplay(
+            value=[point_prob[0]["easting"], point_prob[0]["northing"], p]
+        )
+        eventHandler.postEvent(receiver=eventHandler.activities_panel, event=event)
 
 
 def main():
