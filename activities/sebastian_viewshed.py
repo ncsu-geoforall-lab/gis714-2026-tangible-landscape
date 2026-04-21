@@ -5,11 +5,11 @@ import os
 import grass.script as gs
 
 
-def run_contours(scanned_elev, env, **kwargs):
+def calib_contours(scanned_elev, env, **kwargs):
     interval = 2
     gs.run_command(
         "r.contour",
-        input=kwargs["scanned_calib_elev"],
+        input=scanned_elev,
         output="contours",
         step=interval,
         flags="t",
