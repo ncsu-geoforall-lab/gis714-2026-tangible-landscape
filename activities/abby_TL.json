@@ -1,0 +1,35 @@
+{
+  "tasks": [
+    {
+      "layers": [
+        [
+          "d.rast",
+          "map=roughness"
+        ],
+        [
+          "d.rast",
+          "map=runoff",
+          "values=100-1000000"
+        ],
+        [
+          "d.legend",
+          "raster=runoff",
+          "title=Runoff Intensity",
+          "at=5,30,2,7",
+          "bgcolor=white"
+        ]
+      ],
+      "base": "scan",
+      "scanning_params": {
+        "smooth": 10,
+        "zexag": 2,
+        "numscans": 1,
+        "interpolate": true
+      },
+      "analyses": "abby_TL.py",
+      "title": "How Landcover Influences Runoff",
+      "author": "Abby Wiese",
+      "instructions": "Reshape the tangible landscape and observe how runoff intensity (blue=low, red=high) changes in response. In this analysis, runoff intensity considers both the topography and the landcover of the landscape which impacts the roughness of the surface and therefore how water behaves."
+    }
+  ]
+}
