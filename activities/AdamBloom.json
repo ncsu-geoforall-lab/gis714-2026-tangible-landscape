@@ -3,7 +3,7 @@
     {
       "layers": [
         ["d.rast", "map=global_irradiation"],
-        ["d.legend", "raster=global_irradiation"]
+        ["d.legend", "raster=global_irradiation", "-t", "font=sans", "digits=1"]
       ],
       "base": "elev_lid792_1m",
       "scanning_params": {

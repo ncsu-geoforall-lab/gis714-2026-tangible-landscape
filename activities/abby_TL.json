@@ -15,8 +15,10 @@
           "d.legend",
           "raster=runoff",
           "title=Runoff Intensity",
-          "at=5,30,2,7",
-          "bgcolor=white"
+          "at=5,50,2,7",
+          "bgcolor=white",
+          "font=sans",
+          "flags=lt"
         ]
       ],
       "base": "scan",

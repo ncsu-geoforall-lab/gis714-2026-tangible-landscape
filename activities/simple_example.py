@@ -29,7 +29,7 @@ def run_slope(scanned_elev, env, **kwargs):
 
 
 def run_contours(scanned_elev, env, **kwargs):
-    interval = 5
+    interval = 2
     gs.run_command(
         "r.contour",
         input=scanned_elev,

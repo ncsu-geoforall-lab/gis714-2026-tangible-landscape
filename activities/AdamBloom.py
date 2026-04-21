@@ -5,7 +5,9 @@ import os
 import grass.script as gs
 
 
-def run_sun(scanned_elev, day_of_year, time, env, **kwargs):
+def run_sun(scanned_elev, env, **kwargs):
+    day_of_year = 261
+    time = 12
     gs.run_command(
         "r.sun",
         elevation=scanned_elev,
@@ -24,9 +26,7 @@ def main():
     gs.run_command("g.region", raster=elevation, res=4, flags="a", env=env)
     gs.run_command("r.resamp.stats", input=elevation, output=elev_resampled, env=env)
 
-    run_sun(
-        scanned_elev=elev_resampled, day_of_year=261, time=12, env=env
-    )  # testing with my birthday!
+    run_sun(scanned_elev=elev_resampled, env=env)  # testing with my birthday!
 
 
 if __name__ == "__main__":
