@@ -1,0 +1,23 @@
+{
+  "tasks": [
+    {
+      "layers": [
+        ["d.rast", "map=viewshed"],
+        ["d.legend", "raster=viewshed", "-t", "font=sans", "digits=1"],
+        ["d.vect", "map=contours", "color=77:77:77", "width=2"]
+      ],
+      "base": "elev_lid792_1m",
+      "scanning_params": {
+        "smooth": 10,
+        "zexag": 2,
+        "numscans": 1,
+        "interpolate": true
+      },
+      "calibrate": true,
+      "analyses": "sebastian_viewshed.py",
+      "title": "Viewshed",
+      "author": "Juan Sebastian",
+      "instructions": "Compute viewshed based on a marker placed on the tangible landscape."
+    }
+  ]
+}

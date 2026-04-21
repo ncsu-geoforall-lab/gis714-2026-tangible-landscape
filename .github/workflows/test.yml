@@ -44,6 +44,7 @@ jobs:
           grass --tmp-location XY --exec g.extension r.accumulate
           grass --tmp-location XY --exec g.extension r.lake.series
           grass --tmp-location XY --exec g.extension r.stream.distance
+          grass --tmp-location XY --exec g.extension r.divergence
 
       - name: Test execution of Python files
         run: |
