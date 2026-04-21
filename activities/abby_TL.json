@@ -18,7 +18,7 @@
           "at=5,50,2,7",
           "bgcolor=white",
           "font=sans",
-          "flags=lt"
+          "-lt"
         ]
       ],
       "base": "scan",
